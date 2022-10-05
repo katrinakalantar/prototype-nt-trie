@@ -3,7 +3,17 @@
 
 Tools for accessing the NCBI database using marisa trie.
 
+The NCBI database is huge and difficult to query using existing tools. The CZ ID team developed some key/value stores to contain various parts of the NCBI databases and enable much more efficient querying. These files rely on the marisa-trie data structure. More information can be found here: https://github.com/pytries/marisa-trie. 
 
+Specifically,
+* `accession2taxid.marisa` contains key = accession, value = taxid -- allows rapid look-up of taxid for an associated accession
+* `taxid2accession.marisa` contains key = taxid, value = accession -- allows rapid look-up of all accessions for a particular taxid
+* `nr_loc.marisa` contains key = accession, value = location -- allows rapid look-up of sequence locations (in the NCBI NR DB) by accession; the location values can then be used to access raw sequences associated with each accession.
+* `nt_loc.marisa` contains key = accession, value = location -- allows rapid look-up of sequence locations (in the NCBI NT DB) by accession; the location values can then be used to access raw sequences associated with each accession.
+* `nt_info.marisa` contains key = XXX, value = XXX -- allows XXX [to be determined]
+* `taxid-lineages.marisa` contains key = XXX, value = XXX -- allows XXX [to be determined]
+
+For initial experiments related to NCBI DB redundancy, the `taxid2accession.marisa` and `[nt|nr]_loc.marisa` files may be most relevant.
 
 
 ### Set-up
