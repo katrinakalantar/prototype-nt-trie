@@ -66,3 +66,18 @@ For reference if creating new tries...
 ### Usage
 
 Can load the trie(s) and query using examples from `query-trie/play_with_trie.py`
+
+
+
+
+### Downstream application
+
+**One Idea - Sourmash Taxonomic Relatedness**
+
+Can gather all sequences for a particular taxid (i.e. into `output.fasta` via script `get_seqs_by_taxid.py`), and then use something like sourmash to evaluate relatedness.
+
+```bash
+sourmash compute --singleton -k=21 --scaled=10000 output.fasta
+sourmash compare output.fasta.sig -o cmp
+sourmash plot cmp
+```
