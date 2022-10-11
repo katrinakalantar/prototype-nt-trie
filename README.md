@@ -1,4 +1,5 @@
 
+
 # prototype-nt-trie
 
 Tools for accessing the NCBI database using marisa trie.
@@ -7,11 +8,49 @@ The NCBI database is huge and difficult to query using existing tools. The CZ ID
 
 Specifically,
 * `accession2taxid.marisa` contains key = accession, value = taxid -- allows rapid look-up of taxid for an associated accession
+```
+WP_189720600  # accession 
+[(40324,)]    # taxid (in a tuple)
+WP_189720601
+[(40324,)]
+```
+
 * `taxid2accession.marisa` contains key = taxid, value = accession -- allows rapid look-up of all accessions for a particular taxid
+```
+2026735    # taxid
+# accessions (as list of tuples)
+[(b'MBW2272000',), (b'MBW2272001',), (b'MBW2272002',), (b'MBW2272003',), (b'MBW2272004',), (b'MBW2272005',), (b'MBW2272006',), (b'MBW2272007',), (b'MBW2272008',), (b'MBW2272009',)]
+```
 * `nr_loc.marisa` contains key = accession, value = location -- allows rapid look-up of sequence locations (in the NCBI NR DB) by accession; the location values can then be used to access raw sequences associated with each accession.
+```
+WP_189720600.1.            # accession
+[(58532278831, 203, 493)]  # location, triplet of values (seq_offset, header_len, seq_len)
+WP_189720601.1
+[(6838193903, 143, 221)]
+```
 * `nt_loc.marisa` contains key = accession, value = location -- allows rapid look-up of sequence locations (in the NCBI NT DB) by accession; the location values can then be used to access raw sequences associated with each accession.
+```
+same as above, but for NT database
+XM_039400000.1
+[(136943594771, 101, 2417)]
+XM_039400001.1
+[(136912702546, 122, 2328)]
+```
 * `nt_info.marisa` contains key = accession, value = info about accession (DEFINITION and LENGTH) fields from accession entries -- allows rapid lookup of supporting details about accession sequence
+```
+XM_039400000.1    # accession
+# "INFO" about the accession
+[(b'PREDICTED: Styela clava solute carrier family 22 member 12-like (LOC120332697), mRNA\n', 2387)]
+XM_039400001.1
+[(b'PREDICTED: Styela clava hercynylcysteine sulfoxide lyase-like (LOC120332696), transcript variant X1, mRNA\n', 2299)]
+```
 * `taxid-lineages.marisa` contains key = taxid, value = triplet of taxids for species / genus / family- level classification -- allows rapid lookup of species / genus / family taxon lineage
+```
+1829300                    # taxid
+[(1829300, -200, 92557)]   # lineage, triplet of ("SPECIES", "GENUS", "FAMILY")
+182930
+[(182930, 182922, 400783)]
+```
 
 For initial experiments related to NCBI DB redundancy, the `taxid2accession.marisa` and `[nt|nr]_loc.marisa` files may be most relevant.
 
@@ -65,7 +104,7 @@ For reference if creating new tries...
 
 ### Usage
 
-Can load the trie(s) and query using examples from `query-trie/play_with_trie.py`
+Can load the trie(s) and query using examples from `query-trie/preview_tries.py` or `query-trie/play_with_trie.py` 
 
 
 
